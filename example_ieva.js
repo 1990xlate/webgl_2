@@ -73,45 +73,29 @@ uniforms: uniform,
 
 ///cube
 const cube = new THREE.Mesh(geometry, material);
-//cube.scale.set(3, 3, 3);
+cube.scale.set(10, 10, 10);
+cube.position.z = -40; 
+ cube.position.y = 0;
   camera.position.z = 0;
 
+  scene.add(cube);
+
  
- 
-
-  let mesh;
-  let mesh_arr = [];
-  for (let this_x = 0; this_x < 1; this_x++) {
-    for (let this_y = -1; this_y < 1; this_y++) {
-      mesh = cube.clone();
-      mesh.position.set(this_x * 5, this_y * 5, -10);
-
-      mesh_arr.push(mesh);
-      scene.add(mesh);
-    }
-  }
-
-
 //gui
-gui_container
-    .add(params, "ball", 0, 5)
+ gui_container
+    .add(params, "ball", 0, 15)
     .step(0.001)
     .onChange(function (value) {
-      //console.log(value);
-     mesh_arr.forEach(function (mesh_object) {
-        mesh_object.morphTargetInfluences[0] = value;
-      });
+      cube.morphTargetInfluences[0] = value;
 
     });
 
-  gui_container
-    .add(params, "bow", 0, 5)
+     gui_container
+    .add(params, "bow", 0, 15)
     .step(0.001)
     .onChange(function (value) {
-      //console.log(value);
-     mesh_arr.forEach(function (mesh_object) {
-        mesh_object.morphTargetInfluences[1] = value;
-      });
+      cube.morphTargetInfluences[1] = value;
+
     });
 
   gui_container.open();
@@ -123,7 +107,8 @@ gui_container
 const geometry1 = new THREE.BoxGeometry(20,20,20);
   const cube1 = new THREE.Mesh(geometry1,material1);
   cube1.position.z = -60;    
-   cube1.position.y = -20;
+  cube1.position.y = -20;
+
   scene.add(cube1);
 
 
@@ -137,7 +122,10 @@ const geometry1 = new THREE.BoxGeometry(20,20,20);
   cube1.rotation.x += Math.PI/180;
   cube1.rotation.y += Math.PI/180;
   cube1.rotation.z += Math.PI/180;
+  //cube.morphTargetInfluences[0] = i_counter;
+  //cube.morphTargetInfluences[1] = i_counter;
   uniform["time"].vlaue = performance.now() / 1000;
+
     effect.render(scene,camera);
   });
 
